@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gender Roles: Noon at Ngayon</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        katipunan: {
+                            red: '#8B0000',
+                            gold: '#D4AF37',
+                            cream: '#f4f4f4',
+                            dark: '#1a1a1a'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #f4f4f4;
+            overscroll-behavior: none; /* Prevents pull-to-refresh on mobile */
+        }
+
+        /* Transitions */
+        .slide-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .slide-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        
+        /* Animation Keyframes */
+        @keyframes bounce-short {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-short {
+            animation: bounce-short 0.5s ease-in-out 1;
+        }
+
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+
+        /* Touch target improvements */
+        button {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body class="text-gray-800 h-[100dvh] flex flex-col overflow-hidden font-sans bg-stone-100 relative">
+
+    <!-- Header / Navbar -->
+    <nav class="bg-katipunan-red text-white p-4 shadow-lg z-50 flex-none relative">
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-katipunan-red via-katipunan-gold to-katipunan-red"></div>
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-katipunan-gold p-2 rounded-lg text-katipunan-red shadow-md">
+                    <i class="fa-solid fa-scale-balanced text-xl"></i>
+                </div>
+                <div>
+                    <span class="block text-lg font-bold tracking-wider leading-none font-serif">ARAL PAN 10</span>
+                    <span class="text-[10px] uppercase tracking-widest text-yellow-200">Gender Roles Immersive</span>
+                </div>
+            </div>
+            <!-- Progress Indicator -->
+            <div class="hidden md:flex items-center space-x-2 text-xs">
+                <div class="px-3 py-1 rounded-full bg-white/10 border border-white/20">
+                    Station <span id="station-indicator">Intro</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Watermark (Adjusted: Centered at bottom to avoid buttons) -->
+    <div class="fixed bottom-6 left-0 w-full text-center text-stone-500 text-sm z-0 pointer-events-none font-serif italic select-none opacity-80 md:text-base font-bold tracking-wide">
+        Inihanda ni Sir Gio Gabriel G. Quebral
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow relative w-full h-full overflow-hidden flex items-center justify-center p-4 z-10">
+        
+        <!-- Background decorative element -->
+        <div class="absolute inset-0 z-0 opacity-5 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+
+        <!-- SLIDE 0: INTRO -->
+        <div id="slide-0" class="main-slide absolute inset-0 flex items-center justify-center p-4 transition-all duration-500 z-10">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-5xl flex flex-col md:flex-row h-auto max-h-[90vh] md:h-[600px] border border-gray-200 relative z-20">
+                <!-- Hero Image Side -->
+                <div class="md:w-5/12 bg-katipunan-red text-white p-8 md:p-12 flex flex-col justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-black opacity-20"></div>
+                    <div class="absolute inset-0 mix-blend-multiply opacity-40 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Katipuneros.jpg/640px-Katipuneros.jpg')] bg-cover bg-center"></div>
+                    
+                    <div class="relative z-10">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight font-serif">
+                            Stereotypes <br>
+                            <span class="text-katipunan-gold italic">vs. Reality</span>
+                        </h1>
+                        <div class="h-1 w-20 bg-katipunan-gold mb-6"></div>
+                        <p class="text-stone-200 text-lg font-light">
+                            Isang pagsusuri sa imahe ng kababaihang Pilipina mula sa Himagsikan hanggang Social Media.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Intro Content Side -->
+                <div class="md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-katipunan-cream relative">
+                    <span class="absolute top-8 right-8 text-katipunan-red/20 text-6xl font-serif font-bold">1896</span>
+                    
+                    <span class="bg-red-100 text-katipunan-red text-xs font-bold px-3 py-1 rounded-full mb-6 w-fit tracking-wide border border-red-200">GRADE 10 MODULE</span>
+                    
+                    <p class="text-gray-600 mb-8 text-lg leading-relaxed">
+                        Maligayang pagdating. Mayroon tayong <strong>4 na Istasyon</strong>. Sa bawat isa, pagbabanggain natin ang <span class="text-katipunan-red font-bold">Kasaysayan (Noon)</span> at <span class="text-blue-600 font-bold">Media (Ngayon)</span>.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-3 mb-8">
+                        <div class="p-3 bg-white rounded-xl shadow-sm border-l-4 border-katipunan-red">
+                            <h3 class="font-bold text-gray-800 font-serif">4 na Tema</h3>
+                            <p class="text-xs text-gray-500">Ganda, Tahanan, Lakas, Liderato</p>
+                        </div>
+                        <div class="p-3 bg-white rounded-xl shadow-sm border-l-4 border-katipunan-gold">
+                            <h3 class="font-bold text-gray-800 font-serif">Deep Dive</h3>
+                            <p class="text-xs text-gray-500">Pindutin ang "Aklat" para sa detalye</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-3">
+                        <button onclick="nextSlide()" class="flex-1 bg-katipunan-red text-white px-8 py-4 rounded-xl font-bold hover:bg-red-900 transition-all shadow-lg hover:shadow-red-900/30 flex items-center justify-center gap-3 active:scale-95">
+                            <span>Simulan ang Activity</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        
+                        <button onclick="downloadApp()" class="flex-1 bg-white text-gray-700 border-2 border-gray-200 px-8 py-4 rounded-xl font-bold hover:bg-gray-50 hover:border-katipunan-gold hover:text-katipunan-red transition-all shadow-sm flex items-center justify-center gap-3 active:scale-95 group">
+                            <i class="fa-solid fa-download group-hover:animate-bounce"></i>
+                            <span>I-save (Offline)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATION TEMPLATE GENERATOR (Repeated structure for stations) -->
+        <!-- Station 1 -->
+        <div id="slide-1" class="main-slide hidden absolute inset-0 flex-col items-center justify-center p-4 transition-all duration-500 z-10">
+            <div class="w-full max-w-6xl flex flex-col h-full max-h-[85vh] relative z-20">
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-8 border-b-2 border-katipunan-gold/30 pb-4 flex-none">
+                    <div>
+                        <span class="text-katipunan-red font-bold tracking-widest text-sm uppercase mb-1 block">Station 1</span>
+                        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-serif">Kagandahan vs. Kabayanihan</h2>
+                    </div>
+                    <button id="btn-deepdive-1" onclick="openDeepDive(1)" class="mt-4 md:mt-0 bg-gradient-to-r from-katipunan-red to-red-900 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition flex items-center gap-2 shadow-md animate-bounce">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Buksan ang Aklat (Deep Dive)</span>
+                    </button>
+                </div>
+
+                <!-- Cards Container -->
+                <div class="flex-grow grid md:grid-cols-2 gap-4 overflow-y-auto custom-scroll pb-20 md:pb-0">
+                    <!-- Noon Card -->
+                    <div class="bg-[#fffbeb] rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-amber-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-scroll text-6xl text-amber-900"></i>
+                        </div>
+                        <span class="bg-amber-800 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">KASAYSAYAN</span>
+                        <h3 class="text-2xl font-bold text-amber-900 font-serif mb-4">Tandang Sora</h3>
+                        <ul class="space-y-4 text-amber-900/80 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span><strong>Edad: 84.</strong> Kulubot ang balat, simpleng baro't saya.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span><strong>Ambag:</strong> Hindi sinukat sa kinis. Ang "ganda" ay nasa tapang.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Ngayon Card -->
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-pink-500 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-tv text-6xl text-pink-600"></i>
+                        </div>
+                        <span class="bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">MEDIA</span>
+                        <h3 class="text-2xl font-bold text-pink-700 font-serif mb-4">Whitening Obsession</h3>
+                        <ul class="space-y-4 text-gray-700 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-pink-500"></i> <span><strong>Mensahe:</strong> "Kapag maputi, maganda. Kapag maitim, marumi."</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-pink-500"></i> <span><strong>Pagtanda:</strong> Itinuturing na "sakit" na dapat gamutin.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Footer Nav -->
+                <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 flex justify-between mt-4 z-20">
+                    <button onclick="prevSlide()" class="text-gray-500 hover:text-katipunan-red font-bold flex items-center gap-2 px-4 py-2">
+                        <i class="fa-solid fa-arrow-left"></i> Bumalik
+                    </button>
+                    <button onclick="nextSlide()" class="bg-gray-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-900 shadow-lg flex items-center gap-2">
+                        Susunod <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Station 2 -->
+        <div id="slide-2" class="main-slide hidden absolute inset-0 flex-col items-center justify-center p-4 transition-all duration-500 z-10">
+            <div class="w-full max-w-6xl flex flex-col h-full max-h-[85vh] relative z-20">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-8 border-b-2 border-katipunan-gold/30 pb-4 flex-none">
+                    <div>
+                        <span class="text-emerald-700 font-bold tracking-widest text-sm uppercase mb-1 block">Station 2</span>
+                        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-serif">Tahanan vs. Bayan</h2>
+                    </div>
+                    <button id="btn-deepdive-2" onclick="openDeepDive(2)" class="mt-4 md:mt-0 bg-gradient-to-r from-emerald-600 to-emerald-800 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition flex items-center gap-2 shadow-md animate-bounce">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Buksan ang Aklat (Deep Dive)</span>
+                    </button>
+                </div>
+
+                <div class="flex-grow grid md:grid-cols-2 gap-4 overflow-y-auto custom-scroll pb-20 md:pb-0">
+                    <!-- Noon -->
+                    <div class="bg-[#f0fdf4] rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-emerald-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="fa-solid fa-house-medical text-6xl text-emerald-900"></i></div>
+                        <span class="bg-emerald-700 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">KASAYSAYAN</span>
+                        <h3 class="text-2xl font-bold text-emerald-900 font-serif mb-4">Strategic Motherhood</h3>
+                        <ul class="space-y-4 text-emerald-900/80 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span><strong>Logistics:</strong> Si Gregoria de Jesus ay Logistics Manager, hindi lang "tagaluto".</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span><strong>HQ:</strong> Ang bahay ay naging ospital at imbakan ng armas.</span></li>
+                        </ul>
+                    </div>
+                    <!-- Ngayon -->
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-blue-500 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="fa-solid fa-kitchen-set text-6xl text-blue-600"></i></div>
+                        <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">MEDIA</span>
+                        <h3 class="text-2xl font-bold text-blue-700 font-serif mb-4">Domestic Tropes</h3>
+                        <ul class="space-y-4 text-gray-700 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-blue-500"></i> <span><strong>Kusina:</strong> Sa ads, ang mundo ng ina ay umiikot lang sa mantsa at lasa.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-blue-500"></i> <span><strong>Invisible:</strong> Hindi pinapakita ang strategic thinking ng isang ina.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 flex justify-between mt-4 z-20">
+                    <button onclick="prevSlide()" class="text-gray-500 hover:text-katipunan-red font-bold flex items-center gap-2 px-4 py-2"><i class="fa-solid fa-arrow-left"></i> Bumalik</button>
+                    <button onclick="nextSlide()" class="bg-gray-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-900 shadow-lg flex items-center gap-2">Susunod <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Station 3 -->
+        <div id="slide-3" class="main-slide hidden absolute inset-0 flex-col items-center justify-center p-4 transition-all duration-500 z-10">
+            <div class="w-full max-w-6xl flex flex-col h-full max-h-[85vh] relative z-20">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-8 border-b-2 border-katipunan-gold/30 pb-4 flex-none">
+                    <div>
+                        <span class="text-red-700 font-bold tracking-widest text-sm uppercase mb-1 block">Station 3</span>
+                        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-serif">Kahinaan vs. Kalakasan</h2>
+                    </div>
+                    <button id="btn-deepdive-3" onclick="openDeepDive(3)" class="mt-4 md:mt-0 bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition flex items-center gap-2 shadow-md animate-bounce">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Buksan ang Aklat (Deep Dive)</span>
+                    </button>
+                </div>
+
+                <div class="flex-grow grid md:grid-cols-2 gap-4 overflow-y-auto custom-scroll pb-20 md:pb-0">
+                    <!-- Noon -->
+                    <div class="bg-[#fef2f2] rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-red-800 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="fa-solid fa-person-rifle text-6xl text-red-900"></i></div>
+                        <span class="bg-red-800 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">KASAYSAYAN</span>
+                        <h3 class="text-2xl font-bold text-red-900 font-serif mb-4">Warrior Women</h3>
+                        <ul class="space-y-4 text-red-900/80 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span><strong>Frontliners:</strong> Si Teresa Magbanua ay namuno sa labanan sakay ng kabayo.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span>Walang "Damsel in Distress". Sila ay may hawak na bolo at baril.</span></li>
+                        </ul>
+                    </div>
+                    <!-- Ngayon -->
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-purple-500 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="fa-solid fa-masks-theater text-6xl text-purple-600"></i></div>
+                        <span class="bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">MEDIA</span>
+                        <h3 class="text-2xl font-bold text-purple-700 font-serif mb-4">The "Iyakin" Trope</h3>
+                        <ul class="space-y-4 text-gray-700 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-purple-500"></i> <span><strong>Fragility:</strong> Bida = laging api, umiiyak, naghihintay ng savior.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-purple-500"></i> <span><strong>Labeling:</strong> Babae = "Hysterical" / Lalaki = "Passionate".</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 flex justify-between mt-4 z-20">
+                    <button onclick="prevSlide()" class="text-gray-500 hover:text-katipunan-red font-bold flex items-center gap-2 px-4 py-2"><i class="fa-solid fa-arrow-left"></i> Bumalik</button>
+                    <button onclick="nextSlide()" class="bg-gray-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-900 shadow-lg flex items-center gap-2">Susunod <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Station 4 -->
+        <div id="slide-4" class="main-slide hidden absolute inset-0 flex-col items-center justify-center p-4 transition-all duration-500 z-10">
+            <div class="w-full max-w-6xl flex flex-col h-full max-h-[85vh] relative z-20">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-8 border-b-2 border-katipunan-gold/30 pb-4 flex-none">
+                    <div>
+                        <span class="text-yellow-700 font-bold tracking-widest text-sm uppercase mb-1 block">Station 4</span>
+                        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-serif">Estereotipo vs. Reyalidad</h2>
+                    </div>
+                    <button id="btn-deepdive-4" onclick="openDeepDive(4)" class="mt-4 md:mt-0 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition flex items-center gap-2 shadow-md animate-bounce">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Buksan ang Aklat (Deep Dive)</span>
+                    </button>
+                </div>
+
+                <div class="flex-grow grid md:grid-cols-2 gap-4 overflow-y-auto custom-scroll pb-20 md:pb-0">
+                    <!-- Noon -->
+                    <div class="bg-[#fefce8] rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-yellow-800 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="fa-solid fa-sun text-6xl text-yellow-900"></i></div>
+                        <span class="bg-yellow-800 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">KASAYSAYAN</span>
+                        <h3 class="text-2xl font-bold text-yellow-900 font-serif mb-4">Ang Babaylan</h3>
+                        <ul class="space-y-4 text-yellow-900/80 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span><strong>Equal Power:</strong> Ang Babaylan ay kapantay ng Datu. Spiritual leader at advisor.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-sm"></i> <span>Pamumuno base sa <strong>karunungan</strong>, hindi sa kasarian.</span></li>
+                        </ul>
+                    </div>
+                    <!-- Ngayon -->
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border-l-8 border-gray-600 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i class="fa-solid fa-user-tie text-6xl text-gray-600"></i></div>
+                        <span class="bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block">MEDIA</span>
+                        <h3 class="text-2xl font-bold text-gray-800 font-serif mb-4">"Bossy" vs "Leader"</h3>
+                        <ul class="space-y-4 text-gray-700 text-lg">
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-gray-500"></i> <span><strong>Double Standard:</strong> Strikto na Lalaki = "Strong". Strikto na Babae = "Bossy".</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-xmark mt-1 text-sm text-gray-500"></i> <span>Nakakahon ang babae na dapat "mabait" lang palagi.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 md:static md:bg-transparent md:border-0 md:p-0 flex justify-between mt-4 z-20">
+                    <button onclick="prevSlide()" class="text-gray-500 hover:text-katipunan-red font-bold flex items-center gap-2 px-4 py-2"><i class="fa-solid fa-arrow-left"></i> Bumalik</button>
+                    <button onclick="nextSlide()" class="bg-katipunan-red text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 shadow-lg flex items-center gap-2">Tapusin <i class="fa-solid fa-flag-checkered"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Slide: Pamprosesong Tanong -->
+        <div id="slide-5" class="main-slide hidden absolute inset-0 flex items-center justify-center p-4 transition-all duration-500 z-10">
+            <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-12 w-full max-w-4xl border-t-8 border-katipunan-red relative h-full md:h-auto max-h-[90vh] overflow-y-auto custom-scroll relative z-20">
+                <h2 class="text-3xl md:text-4xl font-bold text-katipunan-red mb-4 font-serif text-center">Pamprosesong Tanong</h2>
+                <p class="text-center text-gray-500 mb-8 italic">Isulat ang mga sagot sa iyong kuwaderno o Activity Passport.</p>
+                
+                <div class="space-y-6 text-left">
+                    <div class="bg-stone-50 p-6 rounded-xl border-l-4 border-katipunan-gold shadow-sm">
+                        <p class="font-bold text-gray-800 text-lg mb-2 font-serif">1. Ang "Paurong" na Pagtingin</p>
+                        <p class="text-gray-700 leading-relaxed">Base sa computation natin kanina (129 years), bakit tila "pa-atras" ang pagtingin ng media sa kababaihan (from Hero to Object of Beauty)?</p>
+                    </div>
+                    
+                    <div class="bg-stone-50 p-6 rounded-xl border-l-4 border-katipunan-red shadow-sm">
+                        <p class="font-bold text-gray-800 text-lg mb-2 font-serif">2. Ang Tapang ni Tandang Sora</p>
+                        <p class="text-gray-700 leading-relaxed">Nakikita ba ninyo ang tapang ni Tandang Sora sa mga babaeng ine-endorso sa media ngayon?</p>
+                    </div>
+
+                    <div class="bg-stone-50 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm">
+                        <p class="font-bold text-gray-800 text-lg mb-2 font-serif">3. Ang Epekto ng Labels</p>
+                        <p class="text-gray-700 leading-relaxed">Paano nakakaapekto ang mga "Labels" (tulad ng "Bossy" o "Iyakin") sa pagtingin natin sa kakayahan ng mga babae?</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center pb-8 md:pb-0">
+                    <button onclick="resetSlides()" class="text-katipunan-red hover:text-red-900 font-bold hover:underline flex items-center justify-center gap-2 mx-auto">
+                        <i class="fa-solid fa-rotate-right"></i> Ulitin ang Activity
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Reminder Modal -->
+    <div id="reminder-modal" class="fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden transition-opacity">
+         <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm text-center animate-bounce-short border-t-4 border-yellow-500">
+             <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-book-open text-yellow-600 text-3xl"></i>
+             </div>
+             <h3 class="font-bold text-2xl mb-2 text-gray-800 font-serif">Paalala!</h3>
+             <p class="mb-6 text-gray-600 leading-relaxed">May mahalagang impormasyon sa loob ng aklat. Huwag kalimutang buksan ang <strong>"Deep Dive"</strong> bago lumipat sa susunod na istasyon.</p>
+             <button onclick="closeReminder()" class="w-full bg-katipunan-red text-white px-6 py-3 rounded-xl font-bold hover:bg-red-900 transition shadow-lg">
+                Opo, Babasahin ko muna
+             </button>
+         </div>
+    </div>
+
+    <!-- Deep Dive Overlay (Modal) -->
+    <div id="deep-dive-overlay" class="fixed inset-0 z-[60] bg-katipunan-red/95 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')]"></div>
+
+        <button onclick="closeDeepDive()" class="absolute top-4 right-4 md:top-6 md:right-6 text-white/70 hover:text-white transition z-20 bg-black/20 rounded-full p-2 w-10 h-10 flex items-center justify-center">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
+        <div class="w-full max-w-4xl h-[90vh] md:h-[80vh] flex flex-col relative bg-stone-900 rounded-2xl shadow-2xl overflow-hidden border border-white/10">
+            <!-- Modal Header -->
+            <div class="bg-black/30 p-4 border-b border-white/10 flex justify-between items-center">
+                <span class="text-katipunan-gold font-bold tracking-widest text-xs uppercase">DEEP DIVE MODE</span>
+                <span class="text-white/50 text-xs" id="modal-page-indicator">1 / 4</span>
+            </div>
+
+            <!-- Dynamic Content Container -->
+            <div id="deep-dive-content" class="flex-grow relative p-8 md:p-12 overflow-y-auto custom-scroll flex flex-col justify-center">
+                <!-- Content injected here via JS -->
+            </div>
+
+            <!-- Internal Navigation -->
+            <div class="flex justify-between items-center p-6 bg-black/30 border-t border-white/10">
+                <button onclick="prevSubSlide()" class="text-white hover:text-katipunan-gold font-bold flex items-center gap-2 text-sm md:text-base">
+                    <i class="fa-solid fa-chevron-left"></i> Nakaraan
+                </button>
+                
+                <div class="flex gap-2" id="slide-indicators">
+                    <!-- Dots generated here -->
+                </div>
+                
+                <button onclick="nextSubSlide()" class="text-white hover:text-katipunan-gold font-bold flex items-center gap-2 text-sm md:text-base">
+                    Susunod <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data & Logic -->
+    <script>
+        // Data Structure matching the "Ang Anyo ng Pilipina" content but structured for the app
+        const stationsData = {
+            1: [
+                {
+                    title: "1. Ang Kasaysayan: Tandang Sora",
+                    color: "text-amber-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <div class="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg shadow-amber-500/50 text-white font-bold">1</div>
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 font-serif">Hindi Nasusukat sa Kinis</h3>
+                            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+                                Si Melchora Aquino, o Tandang Sora, ay <strong>84 na taong gulang</strong> nang sumiklab ang Himagsikan.
+                                Isipin mo ang iyong lola—ganoon siya katanda, ngunit hindi ito naging hadlang para maging ina ng rebolusyon.
+                            </p>
+                            <div class="bg-white/10 p-6 rounded-xl border-l-4 border-amber-500 w-full">
+                                <p class="italic text-amber-100">"Binuksan niya ang kanyang maliit na tindahan bilang refuge. Tinagurian siyang 'Ina ng Katipunan' hindi dahil maganda siya o maputi, kundi dahil sa kanyang malasakit."</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "2. Ang Media: The Whitening Trap",
+                    color: "text-pink-400",
+                    content: `
+                         <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <i class="fa-solid fa-spray-can-sparkles text-5xl text-pink-400 mb-6"></i>
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 font-serif">Puti = Maganda?</h3>
+                            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+                                Sa kasalukuyan, ang media ay nagbebenta ng ideya na ang pagiging morena ay "dumi" na dapat linisin. 
+                                Ang mga commercial ng <strong>Glutathione at Papaya Soap</strong> ay nangangako ng "Social Mobility"—na kapag pumuti ka, aangat ang buhay mo.
+                            </p>
+                            <ul class="space-y-3 text-gray-300 w-full bg-black/20 p-4 rounded-lg">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-circle-xmark text-pink-500"></i> Ang pagtanda ay "sakit" na dapat gamutin.</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-circle-xmark text-pink-500"></i> Nawawala ang respeto sa "wisdom" ng katandaan.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    title: "3. Pagsusuri: Colonial Mentality",
+                    color: "text-indigo-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 font-serif">Bakit tayo nagkakaganito?</h3>
+                            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+                                Ito ay epekto ng daan-daang taong pananakop. Tinuruan tayo na ang "Kastila" (Maputi) ay ang amo, at ang "Indio" (Kayumanggi) ay alipin.
+                            </p>
+                            <div class="bg-red-900/40 p-6 rounded-xl border border-red-500/50 w-full flex items-start gap-4">
+                                <i class="fa-solid fa-triangle-exclamation text-2xl text-red-400 mt-1"></i>
+                                <div>
+                                    <p class="font-bold text-red-200 mb-1">FACT CHECK:</p>
+                                    <p class="text-white">Ang kulay ng balat ay adaptation lang sa araw (melanin). Walang kinalaman ito sa ganda, yaman, o talino ng isang tao.</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "4. Hamon: Proud Morena",
+                    color: "text-emerald-400",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full animate-fade-in text-center">
+                            <i class="fa-solid fa-circle-question text-6xl text-katipunan-gold mb-8"></i>
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Tanong sa Sarili</h3>
+                            <p class="text-2xl md:text-3xl text-white font-serif italic mb-8 leading-relaxed">
+                                "Kung nabubuhay si Tandang Sora ngayon, sa tingin niyo ba ay bibili siya ng whitening soap para maramdaman niyang may halaga siya?"
+                            </p>
+                            <div class="inline-block bg-white text-gray-900 px-6 py-2 rounded-full font-bold">
+                                Isulat ang sagot sa Activity Passport
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            2: [
+                {
+                    title: "1. Ang Kasaysayan",
+                    color: "text-emerald-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Strategic Motherhood</h3>
+                            <p class="text-lg text-gray-300 mb-6">Noong panahon ng digmaan, ang "bahay" ay hindi pahingahan. Ito ay sentro ng operasyon. Ang mga kababaihan tulad nina Gregoria de Jesus ay mga <strong>Logistics Officers</strong>.</p>
+                            <div class="bg-emerald-900/30 p-6 rounded-lg border-l-4 border-emerald-500">
+                                <p class="text-emerald-100">Ginamit nila ang "stereotype" na ang babae ay mahina para itago ang mga dokumento ng Katipunan sa ilalim ng kanilang saya habang dumadaan sa checkpoint.</p>
+                            </div>
+                        </div>`
+                },
+                {
+                    title: "2. Ang Media",
+                    color: "text-blue-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Nakakahon sa Kusina</h3>
+                            <p class="text-lg text-gray-300 mb-6">Tingnan ang mga TV Ads ngayon. Ang nanay ay laging ipinapakita na nag-aalala sa mantsa ng damit o lasa ng sinigang.</p>
+                            <ul class="space-y-2 text-gray-400">
+                                <li>• Bihirang ipakita ang nanay bilang decision maker.</li>
+                                <li>• Ang tagumpay ng ina ay nasusukat sa puti ng labada.</li>
+                            </ul>
+                        </div>`
+                },
+                {
+                    title: "3. Pagsusuri",
+                    color: "text-indigo-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Invisible Labor</h3>
+                            <p class="text-lg text-gray-300">Tinatawag itong <strong>Invisible Labor</strong>—ang trabahong mahalaga sa pagpapatakbo ng lipunan (pag-aalaga, pagluluto) pero hindi binabayaran at hindi itinuturing na "real work."</p>
+                        </div>`
+                },
+                {
+                    title: "4. Hamon",
+                    color: "text-yellow-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center h-full justify-center animate-fade-in">
+                            <i class="fa-solid fa-lightbulb text-5xl text-yellow-400 mb-6"></i>
+                            <p class="text-2xl text-white font-serif italic mb-6">"Bakit 'tulong' lang ang tawag kapag naghugas ng pinggan ang tatay, pero 'obligasyon' kapag nanay ang gumawa?"</p>
+                            <div class="inline-block bg-white text-gray-900 px-6 py-2 rounded-full font-bold">Activity Passport Item</div>
+                        </div>`
+                }
+            ],
+            3: [
+                {
+                    title: "1. Ang Kasaysayan",
+                    color: "text-red-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                             <h3 class="text-3xl font-bold text-white mb-4 font-serif">Visayan Joan of Arc</h3>
+                             <p class="text-lg text-gray-300 mb-6">Hindi totoo na ang mga babae noon ay laging naghihintay na iligtas. Si <strong>Teresa Magbanua</strong>, isang guro, ay namuno sa mga tropa sa Visayas sakay ng kabayo.</p>
+                             <div class="bg-red-900/30 p-4 rounded border-l-4 border-red-500"><p class="text-white">Pinatunayan niya na ang kakayahang humawak ng armas at mamuno sa digmaan ay wala sa kasarian.</p></div>
+                        </div>`
+                },
+                {
+                    title: "2. Ang Media",
+                    color: "text-purple-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">The Crying Lady</h3>
+                            <p class="text-lg text-gray-300 mb-4">Sa teleserye, madalas na ang bida ay api, laging umiiyak, at kailangan ng "Leading Man" para sumaya o maligtas.</p>
+                            <p class="text-purple-300">Nagre-reinforce ito ng ideya na ang babae ay "Emotional Creatures" lamang.</p>
+                        </div>`
+                },
+                {
+                    title: "3. Pagsusuri",
+                    color: "text-indigo-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center h-full justify-center animate-fade-in w-full">
+                            <h3 class="text-3xl font-bold text-white mb-6 font-serif">Galit vs. Toyo</h3>
+                            <div class="grid grid-cols-2 gap-4 w-full">
+                                <div class="bg-blue-900/40 p-6 rounded-xl border border-blue-500/30">
+                                    <p class="font-bold text-blue-300 mb-2">LALAKI</p>
+                                    <p class="text-white text-sm">Kapag nagalit: "Passionate", "May Paninindigan"</p>
+                                </div>
+                                <div class="bg-pink-900/40 p-6 rounded-xl border border-pink-500/30">
+                                    <p class="font-bold text-pink-300 mb-2">BABAE</p>
+                                    <p class="text-white text-sm">Kapag nagalit: "Hysterical", "May Toyo", "Moody"</p>
+                                </div>
+                            </div>
+                        </div>`
+                },
+                {
+                    title: "4. Hamon",
+                    color: "text-white",
+                    content: `
+                         <div class="flex flex-col items-center text-center h-full justify-center animate-fade-in">
+                            <p class="text-2xl text-white font-serif italic mb-6">"Ang pag-iyak ba ay kahinaan? O ito ay tanda ng tao na marunong makiramdam at may malasakit?"</p>
+                            <div class="inline-block bg-white text-gray-900 px-6 py-2 rounded-full font-bold">Activity Passport Item</div>
+                        </div>`
+                }
+            ],
+            4: [
+                {
+                    title: "1. Ang Kasaysayan",
+                    color: "text-yellow-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Pantay na Kapangyarihan</h3>
+                            <p class="text-lg text-gray-300 mb-6">Bago pa dumating ang mga Espanyol, ang lipunang Pilipino ay <em>egalitarian</em>. Ang mga <strong>Babaylan</strong> ay mga espirituwal na lider na iginagalang katulad ng Datu.</p>
+                            <p class="text-yellow-200 font-bold border-b border-yellow-200/30 pb-2">Basehan ng kapangyarihan: KARUNUNGAN (Wisdom), hindi kasarian.</p>
+                        </div>`
+                },
+                {
+                    title: "2. Ang Media",
+                    color: "text-slate-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Ang "Kontrabida"</h3>
+                            <p class="text-lg text-gray-300 mb-4">Sa pelikula, kapag ang babae ay successful sa career, madalas siyang pinalalabas na masama ang ugali, walang pamilya, o malungkot.</p>
+                            <p class="text-gray-400 italic">Tinatawag silang "Bossy" o "Maarte" kapag nagbibigay ng utos.</p>
+                        </div>`
+                },
+                {
+                    title: "3. Pagsusuri",
+                    color: "text-indigo-400",
+                    content: `
+                        <div class="flex flex-col items-center text-center md:items-start md:text-left h-full justify-center animate-fade-in">
+                            <h3 class="text-3xl font-bold text-white mb-4 font-serif">Takot sa Babaeng May Boses</h3>
+                            <p class="text-lg text-gray-300">Ang lipunan ay sanay na ang babae ay "tagasunod" lang. Kaya kapag ang babae ay namumuno, pakiramdam ng iba ay "threat" ito sa kaayusan.</p>
+                        </div>`
+                },
+                {
+                    title: "4. Hamon",
+                    color: "text-white",
+                    content: `
+                         <div class="flex flex-col items-center text-center h-full justify-center animate-fade-in">
+                            <p class="text-2xl text-white font-serif italic mb-6">"Paano mo babasagin ang label na 'Bossy' at gagawin itong 'Boss'?"</p>
+                            <div class="inline-block bg-white text-gray-900 px-6 py-2 rounded-full font-bold">Activity Passport Item</div>
+                        </div>`
+                }
+            ]
+        };
+
+        // State
+        let currentStationId = 1;
+        let currentSubSlide = 0;
+        let currentMainSlide = 0;
+        const totalMainSlides = 6;
+        
+        // Track Deep Dive Completion
+        let deepDiveOpened = {
+            1: false,
+            2: false,
+            3: false,
+            4: false
+        };
+
+        // Touch Handling Variables
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(0);
+            
+            // Touch Swipe Listener
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+        });
+
+        function handleSwipe() {
+            // Check if overlay is open
+            if(document.getElementById('deep-dive-overlay').classList.contains('opacity-100')) {
+                if (touchEndX < touchStartX - 50) nextSubSlide();
+                if (touchEndX > touchStartX + 50) prevSubSlide();
+            } else {
+                if (touchEndX < touchStartX - 50) nextSlide();
+                if (touchEndX > touchStartX + 50) prevSlide();
+            }
+        }
+
+        // Main Navigation
+        function showSlide(index) {
+            // Hide all
+            document.querySelectorAll('.main-slide').forEach(slide => {
+                slide.classList.add('hidden');
+                slide.classList.remove('flex');
+            });
+            
+            // Show current
+            const currentEl = document.getElementById(`slide-${index}`);
+            currentEl.classList.remove('hidden');
+            currentEl.classList.add('flex');
+            
+            // Update Header Indicator
+            const indicator = document.getElementById('station-indicator');
+            if(index === 0) indicator.innerText = "Intro";
+            else if(index === 5) indicator.innerText = "Pagsusuri";
+            else indicator.innerText = index;
+        }
+
+        function nextSlide() {
+            // Logic to prevent skipping deep dive
+            // currentMainSlide 1 = Station 1, 2 = Station 2, etc.
+            if (currentMainSlide >= 1 && currentMainSlide <= 4) {
+                if (!deepDiveOpened[currentMainSlide]) {
+                    document.getElementById('reminder-modal').classList.remove('hidden');
+                    return;
+                }
+            }
+
+            if (currentMainSlide < totalMainSlides - 1) {
+                currentMainSlide++;
+                showSlide(currentMainSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentMainSlide > 0) {
+                currentMainSlide--;
+                showSlide(currentMainSlide);
+            }
+        }
+        
+        function resetSlides() {
+            // Reset Deep Dive state on restart
+            deepDiveOpened = { 1: false, 2: false, 3: false, 4: false };
+            
+            // Remove checkmarks from buttons (visual reset)
+            for(let i=1; i<=4; i++) {
+                const btn = document.getElementById(`btn-deepdive-${i}`);
+                if(btn) btn.classList.add('animate-bounce');
+            }
+
+            currentMainSlide = 0;
+            showSlide(0);
+        }
+
+        // Reminder Modal Logic
+        function closeReminder() {
+            document.getElementById('reminder-modal').classList.add('hidden');
+        }
+
+        // Deep Dive Modal Logic
+        function openDeepDive(stationId) {
+            currentStationId = stationId;
+            currentSubSlide = 0;
+            renderSubSlide();
+            
+            // Mark as opened
+            deepDiveOpened[stationId] = true;
+            
+            // Visual feedback on the button
+            const btn = document.getElementById(`btn-deepdive-${stationId}`);
+            btn.classList.remove('animate-bounce'); // Stop bouncing to indicate done
+            
+            const overlay = document.getElementById('deep-dive-overlay');
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+        }
+
+        function closeDeepDive() {
+            const overlay = document.getElementById('deep-dive-overlay');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function renderSubSlide() {
+            const data = stationsData[currentStationId][currentSubSlide];
+            const contentDiv = document.getElementById('deep-dive-content');
+            
+            // Update Page Indicator
+            document.getElementById('modal-page-indicator').innerText = `${currentSubSlide + 1} / ${stationsData[currentStationId].length}`;
+
+            // Build Content with Animation
+            contentDiv.innerHTML = data.content;
+
+            // Update Dots
+            const indicatorsDiv = document.getElementById('slide-indicators');
+            let dotsHtml = '';
+            for(let i=0; i < stationsData[currentStationId].length; i++) {
+                let activeClass = i === currentSubSlide ? 'bg-katipunan-gold w-6' : 'bg-white/30 w-2 hover:bg-white/50';
+                dotsHtml += `<div class="h-2 rounded-full ${activeClass} transition-all duration-300 cursor-pointer" onclick="goToSubSlide(${i})"></div>`;
+            }
+            indicatorsDiv.innerHTML = dotsHtml;
+        }
+
+        function nextSubSlide() {
+            if (currentSubSlide < stationsData[currentStationId].length - 1) {
+                currentSubSlide++;
+                renderSubSlide();
+            } else {
+                closeDeepDive();
+            }
+        }
+
+        function prevSubSlide() {
+            if (currentSubSlide > 0) {
+                currentSubSlide--;
+                renderSubSlide();
+            }
+        }
+        
+        function goToSubSlide(index) {
+            currentSubSlide = index;
+            renderSubSlide();
+        }
+
+        // Download Function
+        function downloadApp() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Gender_Roles_Activity_Offline.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Keyboard Nav
+        document.addEventListener('keydown', function(event) {
+            const overlayOpen = document.getElementById('deep-dive-overlay').classList.contains('opacity-100');
+            
+            if(overlayOpen) {
+                if (event.key === "ArrowRight") nextSubSlide();
+                if (event.key === "ArrowLeft") prevSubSlide();
+                if (event.key === "Escape") closeDeepDive();
+            } else {
+                // Only allow arrow keys for main slides if modal is closed
+                // Check if reminder is open? No need, logic handles it in nextSlide
+                if (event.key === "ArrowRight") nextSlide();
+                if (event.key === "ArrowLeft") prevSlide();
+            }
+        });
+
+    </script>
+</body>
+</html>
